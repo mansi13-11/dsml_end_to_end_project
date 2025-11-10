@@ -6,6 +6,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
 from dataclasses import dataclass
 @dataclass
 
@@ -17,10 +19,6 @@ class DataIngestionConfig:
 class DataIngestion:
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
-        # self.data_path = self.ingestion_config.raw_data_path
-        # self.test_size = 0.2
-        # self.random_state = 42
-
 
     def initiate_data_ingestion(self):
         logging.info("Data Ingestion started")
@@ -62,4 +60,7 @@ if __name__ == "__main__":
     train_data, test_data = obj.initiate_data_ingestion()
 
     data_transformtaion = DataTransformation()
-    data_transformtaion.initiate_data_transformation(train_data, test_data)
+    train_arr, test_arr, _ = data_transformtaion.initiate_data_transformation(train_data, test_data)
+
+    model_trainer = ModelTrainer()
+    print(model_trainer.initiate_model_trainer(train_arr, test_arr))
